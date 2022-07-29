@@ -50,6 +50,7 @@ function App() {
       );
 
       request.onmerchantvalidation = (event) => {
+        console.log(event.validationUR);
         // Call your own server to request a new merchant session.
         //const merchantSessionPromise = validateMerchant();
         //event.complete(merchantSessionPromise);
