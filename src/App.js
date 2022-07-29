@@ -1,5 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
+import axios from "axios";
 
 function App() {
   async function onApplePayButtonClicked() {
@@ -51,7 +52,17 @@ function App() {
 
       request.onmerchantvalidation = (event) => {
         console.log(event.validationURL);
+        let obj = { URL: event.validationURL };
         // Call your own server to request a new merchant session.
+        axios
+          .post("http://localhost:8000/validateSession", obj)
+          .then(function (response) {
+            console.log(response);
+            event.complete(response.data);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
         //const merchantSessionPromise = validateMerchant();
         //event.complete(merchantSessionPromise);
       };
