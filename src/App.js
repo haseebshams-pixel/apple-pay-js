@@ -123,7 +123,7 @@ function App() {
   return (
     <div className="App">
       <h1>Apple Pay</h1>
-      <button>Pay</button>
+      <button onClick={onApplePayButtonClicked}>Pay</button>
     </div>
   );
 }
