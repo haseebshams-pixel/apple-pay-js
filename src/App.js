@@ -55,7 +55,7 @@ function App() {
         let obj = { URL: event.validationURL };
         // Call your own server to request a new merchant session.
         axios
-          .post("/validateSession", obj)
+          .post("https://0460-202-163-76-70.in.ngrok.io/validateSession", obj)
           .then(async (res) => {
             event.complete(res.data);
           })
