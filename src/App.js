@@ -56,13 +56,13 @@ function App() {
         // Call your own server to request a new merchant session.
         axios
           .post("https://0460-202-163-76-70.in.ngrok.io/validateSession", obj)
-          .then(function (response) {
-            console.log(response);
-            event.complete(response.data);
+          .then(async (res) => {
+            event.complete(res.data);
           })
-          .catch(function (error) {
+          .catch((error) => {
             console.log(error);
           });
+
         //const merchantSessionPromise = validateMerchant();
         //event.complete(merchantSessionPromise);
       };
