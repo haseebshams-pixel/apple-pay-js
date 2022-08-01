@@ -103,7 +103,7 @@ function App() {
     }
   }
   function onApplePayButtonClicked2() {
-    if (!ApplePaySession) {
+    if (!window.ApplePaySession) {
       return;
     }
 
@@ -121,7 +121,7 @@ function App() {
     };
 
     // Create ApplePaySession
-    const session = new ApplePaySession(3, request);
+    const session = new window.ApplePaySession(3, request);
 
     session.onvalidatemerchant = async (event) => {
       // Call your own server to request a new merchant session.
@@ -163,7 +163,7 @@ function App() {
     session.onpaymentauthorized = (event) => {
       // Define ApplePayPaymentAuthorizationResult
       const result = {
-        status: ApplePaySession.STATUS_SUCCESS,
+        status: window.ApplePaySession.STATUS_SUCCESS,
       };
       const response = session.completePayment(result);
       setToken(response.details.token.paymentData);
