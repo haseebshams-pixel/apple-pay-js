@@ -10,7 +10,6 @@ function App() {
     if (!PaymentRequest) {
       return;
     }
-
     try {
       // Define PaymentMethodData
       const paymentMethodData = [
@@ -66,45 +65,9 @@ function App() {
           .catch((error) => {
             console.log(error);
           });
-
-        //const merchantSessionPromise = validateMerchant();
-        //event.complete(merchantSessionPromise);
       };
 
-      // request.onpaymentmethodchange = (event) => {
-      //   if (event.methodDetails.type !== undefined) {
-      //     // Define PaymentDetailsUpdate based on the selected payment method.
-      //     // No updates or errors needed, pass an object with the same total.
-      //     const paymentDetailsUpdate = {
-      //       total: paymentDetails.total,
-      //     };
-      //     event.updateWith(paymentDetailsUpdate);
-      //   } else if (event.methodDetails.couponCode !== undefined) {
-      //     // Define PaymentDetailsUpdate based on the coupon code.
-      //     const total = calculateTotal(event.methodDetails.couponCode);
-      //     const displayItems = calculateDisplayItem(
-      //       event.methodDetails.couponCode
-      //     );
-      //     const shippingOptions = calculateShippingOptions(
-      //       event.methodDetails.couponCode
-      //     );
-      //     const error = calculateError(event.methodDetails.couponCode);
-
-      //     event.updateWith({
-      //       total: total,
-      //       displayItems: displayItems,
-      //       shippingOptions: shippingOptions,
-      //       modifiers: [
-      //         {
-      //           data: {
-      //             additionalShippingMethods: shippingOptions,
-      //           },
-      //         },
-      //       ],
-      //       error: error,
-      //     });
-      //   }
-      // };
+      request.onpaymentmethodchange = (event) => {};
 
       request.onshippingoptionchange = (event) => {
         // Define PaymentDetailsUpdate based on the selected shipping option.
@@ -131,13 +94,93 @@ function App() {
 
       const response = await request.show();
       console.log(response.details.token.paymentData);
-      setToken(response.details.token.paymentData);
+
       const status = "success";
       await response.complete(status);
     } catch (e) {
       console.log("error", e.message);
       // Handle errors
     }
+  }
+  function onApplePayButtonClicked2() {
+    if (!ApplePaySession) {
+      return;
+    }
+
+    // Define ApplePayPaymentRequest
+    const request = {
+      countryCode: "US",
+      currencyCode: "USD",
+      merchantCapabilities: ["supports3DS"],
+      supportedNetworks: ["visa", "masterCard", "amex", "discover"],
+      total: {
+        label: "Demo (Card is not charged)",
+        type: "final",
+        amount: "1.99",
+      },
+    };
+
+    // Create ApplePaySession
+    const session = new ApplePaySession(3, request);
+
+    session.onvalidatemerchant = async (event) => {
+      // Call your own server to request a new merchant session.
+      let obj = { URL: event.validationURL };
+      // Call your own server to request a new merchant session.
+      axios
+        .post(
+          "https://13b0-110-39-152-42.in.ngrok.io/merchant-session/new",
+          obj
+        )
+        .then(async (res) => {
+          session.completeMerchantValidation(res.datas);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    session.onpaymentmethodselected = (event) => {
+      // Define ApplePayPaymentMethodUpdate based on the selected payment method.
+      // No updates or errors are needed, pass an empty object.
+      const update = {};
+      session.completePaymentMethodSelection(update);
+    };
+
+    session.onshippingmethodselected = (event) => {
+      // Define ApplePayShippingMethodUpdate based on the selected shipping method.
+      // No updates or errors are needed, pass an empty object.
+      const update = {};
+      session.completeShippingMethodSelection(update);
+    };
+
+    session.onshippingcontactselected = (event) => {
+      // Define ApplePayShippingContactUpdate based on the selected shipping contact.
+      const update = {};
+      session.completeShippingContactSelection(update);
+    };
+
+    session.onpaymentauthorized = (event) => {
+      // Define ApplePayPaymentAuthorizationResult
+      const result = {
+        status: ApplePaySession.STATUS_SUCCESS,
+      };
+      const response = session.completePayment(result);
+      setToken(response.details.token.paymentData);
+    };
+
+    session.oncouponcodechanged = (event) => {
+      // Define ApplePayCouponCodeUpdate
+      const update = {};
+
+      session.completeCouponCodeChange(update);
+    };
+
+    session.oncancel = (event) => {
+      // Payment cancelled by WebKit
+    };
+
+    session.begin();
   }
   const tokenization = async () => {
     let obj = {
@@ -155,7 +198,7 @@ function App() {
   return (
     <div className="App">
       <h1>Apple Pay</h1>
-      <button onClick={onApplePayButtonClicked}>Pay</button>
+      <button onClick={onApplePayButtonClicked2}>Pay</button>
       <button onClick={tokenization}>Decrypt</button>
     </div>
   );
