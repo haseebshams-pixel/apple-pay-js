@@ -133,7 +133,7 @@ function App() {
       await response.complete(status);
       console.log("here2");
     } catch (e) {
-      console.log("error", e);
+      console.log("error", e.message);
       // Handle errors
     }
   }
