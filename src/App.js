@@ -133,7 +133,7 @@ function App() {
           obj
         )
         .then(async (res) => {
-          session.completeMerchantValidation(res.datas);
+          session.completeMerchantValidation(res.data);
         })
         .catch((error) => {
           console.log(error);
