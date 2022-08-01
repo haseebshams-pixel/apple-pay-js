@@ -18,7 +18,7 @@ function App() {
           supportedMethods: "https://apple.com/apple-pay",
           data: {
             version: 3,
-            merchantIdentifier: "merchant.com.example",
+            merchantIdentifier: "merchant.com.codingpixel.openboardersWeb",
             merchantCapabilities: ["supports3DS"],
             supportedNetworks: ["amex", "discover", "masterCard", "visa"],
             countryCode: "US",
@@ -156,7 +156,7 @@ function App() {
     <div className="App">
       <h1>Apple Pay</h1>
       <button onClick={onApplePayButtonClicked}>Pay</button>
-      <button onClick={tokenization}>Decypt</button>
+      <button onClick={tokenization}>Decrypt</button>
     </div>
   );
 }
