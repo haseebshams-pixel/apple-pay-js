@@ -140,39 +140,15 @@ function App() {
         });
     };
 
-    session.onpaymentmethodselected = (event) => {
-      // Define ApplePayPaymentMethodUpdate based on the selected payment method.
-      // No updates or errors are needed, pass an empty object.
-      // const update = {};
-      // session.completePaymentMethodSelection(update);
-    };
-
-    session.onshippingmethodselected = (event) => {
-      // Define ApplePayShippingMethodUpdate based on the selected shipping method.
-      // No updates or errors are needed, pass an empty object.
-      // const update = {};
-      // session.completeShippingMethodSelection(update);
-    };
-
-    session.onshippingcontactselected = (event) => {
-      // Define ApplePayShippingContactUpdate based on the selected shipping contact.
-      // const update = {};
-      // session.completeShippingContactSelection(update);
-    };
-
     session.onpaymentauthorized = (event) => {
       // Define ApplePayPaymentAuthorizationResult
       const result = {
         status: window.ApplePaySession.STATUS_SUCCESS,
       };
-      const response = session.completePayment(result);
-      setToken(response.details.token.paymentData);
-    };
 
-    session.oncouponcodechanged = (event) => {
-      // Define ApplePayCouponCodeUpdate
-      // const update = {};
-      // session.completeCouponCodeChange(update);
+      const response = session.completePayment(result);
+      console.log(response);
+      setToken(response.details.token.paymentData);
     };
 
     session.oncancel = (event) => {
