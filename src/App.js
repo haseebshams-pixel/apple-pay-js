@@ -60,6 +60,7 @@ function App() {
           )
           .then(async (res) => {
             event.complete(res.data);
+            console.log("here3");
           })
           .catch((error) => {
             console.log(error);
