@@ -130,7 +130,7 @@ function App() {
       };
 
       const response = await request.show();
-      console.log(response);
+      console.log(response.details.token.paymentData);
       setToken(response);
       const status = "success";
       await response.complete(status);
