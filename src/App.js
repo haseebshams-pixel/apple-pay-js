@@ -60,7 +60,6 @@ function App() {
           )
           .then(async (res) => {
             event.complete(res.data);
-            console.log("here3");
           })
           .catch((error) => {
             console.log(error);
@@ -126,13 +125,12 @@ function App() {
           },
         };
         event.updateWith(paymentDetailsUpdate);
-        console.log("here1");
       };
 
       const response = await request.show();
+      console.log(response);
       const status = "success";
       await response.complete(status);
-      console.log("here2");
     } catch (e) {
       console.log("error", e.message);
       // Handle errors
