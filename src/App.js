@@ -55,7 +55,7 @@ function App() {
         // Call your own server to request a new merchant session.
         axios
           .post(
-            "https://9be4-202-163-76-70.in.ngrok.io/merchant-session/new",
+            "https://13b0-110-39-152-42.in.ngrok.io/merchant-session/new",
             obj
           )
           .then(async (res) => {
