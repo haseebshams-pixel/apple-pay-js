@@ -156,8 +156,8 @@ function App() {
 
     session.onshippingcontactselected = (event) => {
       // Define ApplePayShippingContactUpdate based on the selected shipping contact.
-      const update = {};
-      session.completeShippingContactSelection(update);
+      // const update = {};
+      // session.completeShippingContactSelection(update);
     };
 
     session.onpaymentauthorized = (event) => {
@@ -171,9 +171,8 @@ function App() {
 
     session.oncouponcodechanged = (event) => {
       // Define ApplePayCouponCodeUpdate
-      const update = {};
-
-      session.completeCouponCodeChange(update);
+      // const update = {};
+      // session.completeCouponCodeChange(update);
     };
 
     session.oncancel = (event) => {
