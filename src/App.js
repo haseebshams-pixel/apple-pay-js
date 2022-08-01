@@ -143,15 +143,15 @@ function App() {
     session.onpaymentmethodselected = (event) => {
       // Define ApplePayPaymentMethodUpdate based on the selected payment method.
       // No updates or errors are needed, pass an empty object.
-      const update = {};
-      session.completePaymentMethodSelection(update);
+      // const update = {};
+      // session.completePaymentMethodSelection(update);
     };
 
     session.onshippingmethodselected = (event) => {
       // Define ApplePayShippingMethodUpdate based on the selected shipping method.
       // No updates or errors are needed, pass an empty object.
-      const update = {};
-      session.completeShippingMethodSelection(update);
+      // const update = {};
+      // session.completeShippingMethodSelection(update);
     };
 
     session.onshippingcontactselected = (event) => {
