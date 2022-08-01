@@ -1,8 +1,10 @@
 import logo from "./logo.svg";
 import "./App.css";
 import axios from "axios";
+import { useState } from "react";
 
 function App() {
+  const [token, setToken] = useState("");
   async function onApplePayButtonClicked() {
     // Consider falling back to Apple Pay JS if Payment Request is not available.
     if (!PaymentRequest) {
@@ -129,6 +131,7 @@ function App() {
 
       const response = await request.show();
       console.log(response);
+      setToken(response);
       const status = "success";
       await response.complete(status);
     } catch (e) {
@@ -136,10 +139,24 @@ function App() {
       // Handle errors
     }
   }
+  const tokenization = async () => {
+    let obj = {
+      token: token,
+    };
+    axios
+      .post("https://13b0-110-39-152-42.in.ngrok.io/decypt", obj)
+      .then(async (res) => {
+        console.log("Done");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <div className="App">
       <h1>Apple Pay</h1>
       <button onClick={onApplePayButtonClicked}>Pay</button>
+      <button onClick={tokenization}>Decypt</button>
     </div>
   );
 }
