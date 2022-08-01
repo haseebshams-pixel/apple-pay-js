@@ -125,12 +125,15 @@ function App() {
           },
         };
         event.updateWith(paymentDetailsUpdate);
+        console.log("here1");
       };
 
       const response = await request.show();
       const status = "success";
       await response.complete(status);
+      console.log("here2");
     } catch (e) {
+      console.log("error", e);
       // Handle errors
     }
   }
